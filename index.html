@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page 3D</title>
-    <!-- Utilisez la version minifiée de Three.js -->
     <script src="./js/three.min.js"></script>
-    <!-- Utilisez type="module" pour permettre l'utilisation d'import dans ColladaLoader.js -->
+    
     <script type="module" src="./js/ColladaLoader.js"></script>
 </head>
 <body>
@@ -23,11 +22,11 @@
             var camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
             camera.position.z = 5;
 
-            // Ajoutez une lumière ambiante à la scène
+            
             var ambientLight = new THREE.AmbientLight(0x404040);
             scene.add(ambientLight);
 
-            // Ajoutez une lumière directionnelle à la scène
+            
             var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
             directionalLight.position.set(1, 1, 1).normalize();
             scene.add(directionalLight);
@@ -36,7 +35,7 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
             container.appendChild(renderer.domElement);
 
-            // Chargez le modèle DAE
+            
             var loader = new THREE.ColladaLoader();
             var model;
 
@@ -46,19 +45,19 @@
 
                 scene.add(model);
 
-                // Ajoutez la lumière directionnelle
+               
                 var directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
                 directionalLight.position.set(1, 1, 1).normalize();
                 scene.add(directionalLight);
 
-                // Ajoutez un gestionnaire d'événements pour le clic de souris
+                
                 container.addEventListener('mousedown', onMouseDown, false);
                 container.addEventListener('mouseup', onMouseUp, false);
             }, undefined, function (error) {
                 console.error('Erreur lors du chargement du modèle', error);
             });
 
-            // Animation
+            
             var autoRotate = false; // Indicateur de rotation automatique
             var autoTranslate = false; // Indicateur de translation automatique
             var autoScale = false; // Indicateur de mise à l'échelle automatique
@@ -85,12 +84,12 @@
                 renderer.render(scene, camera);
             };
 
-            // Variables pour la rotation manuelle
+            
             var isMouseDown = false;
             var previousMouseX = 0;
             var previousMouseY = 0; // Nouvelle variable pour stocker la position Y précédente
 
-            // Gestionnaire d'événements pour le clic de souris
+            
             function onMouseDown(event) {
                 isMouseDown = true;
                 previousMouseX = event.clientX;
@@ -101,7 +100,7 @@
                 isMouseDown = false;
             }
 
-            // Gestionnaire d'événements pour le mouvement de souris
+            
             function onMouseMove(event) {
                 if (!isMouseDown) return;
 
@@ -115,10 +114,10 @@
                 previousMouseY = event.clientY; // Mettez à jour la position Y précédente
             }
 
-            // Ajoutez un gestionnaire d'événements pour le mouvement de souris
+            
             container.addEventListener('mousemove', onMouseMove, false);
 
-            // Créez des boutons pour activer/désactiver différentes animations
+            
             var toggleRotationBtn = document.getElementById('toggleRotationBtn');
             toggleRotationBtn.addEventListener('click', function () {
                 toggleRotation();
@@ -139,7 +138,7 @@
                 changeTexture();
             });
 
-            // Fonctions pour activer/désactiver différentes animations
+           
             function toggleRotation() {
                 autoRotate = !autoRotate;
             }
@@ -154,15 +153,15 @@
 
             function changeTexture() {
     if (model) {
-        // Chargez une nouvelle texture à partir d'une image externe
+        
         var newTexture = new THREE.TextureLoader().load('free-clock-faces-blank.png');
 
-        // Répétez la nouvelle texture pour éviter la répétition
+        
         newTexture.wrapS = THREE.RepeatWrapping;
         newTexture.wrapT = THREE.RepeatWrapping;
         newTexture.repeat.set(1, 1);
 
-        // Appliquez la nouvelle texture à tous les matériaux de l'objet
+        
         model.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
                 child.material.map = newTexture;
